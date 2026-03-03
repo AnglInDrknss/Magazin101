@@ -1,6 +1,8 @@
-venv 
-magazin101/__pychache__
-.idea
-product/migrations/__pychache__
-product/__pychache__
+venv/
+.idea/
 db.sqlite3
+
+# Python cache
+__pycache__/
+*/__pycache__/
+*.py[cod]
