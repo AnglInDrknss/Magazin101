@@ -5,7 +5,7 @@ from product.models import Category, SubCategory, Product
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = ['id', 'name', 'icon']
+        fields = ['id', 'name', 'icon', 'created_at']
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
@@ -13,7 +13,7 @@ class SubCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SubCategory
-        fields = ['id', 'name', 'icon', 'description', 'category']
+        fields = ['id', 'name', 'icon', 'description', 'category', 'created_at']
 
 
 class ProductSerializer(serializers.ModelSerializer):
@@ -21,6 +21,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'name', 'description', 'price', 'image', 'sub_category']
+        fields = ['id', 'name', 'description', 'price', 'image', 'sub_category', 'sort_order', 'created_at', 'updated_at']
 
 
