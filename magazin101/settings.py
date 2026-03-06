@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "ckeditor",
     "product",
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'magazin101.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
 
 TEMPLATES = [
     {
@@ -122,3 +127,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'static'
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'ppz.kg API',
+    'DESCRIPTION': 'My API description',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
+}
