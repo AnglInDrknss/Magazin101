@@ -18,11 +18,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from product.urls import router as product_router
+from cart.urls import router as cart_router
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+
 
 main_router = routers.DefaultRouter()
 
 main_router.registry.extend(product_router.registry)
+main_router.registry.extend(cart_router.registry)
 
 
 urlpatterns = [
