@@ -62,3 +62,17 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.product.name}"
+
+class SocialMedia(models.Model):
+    name = models.CharField("Название сети", max_length=255)
+    url = models.URLField("URL", max_length=500)
+    icon = models.ImageField("Иконка", upload_to='social_media_icons/', blank=True, null=True)
+
+    class Meta:
+        verbose_name = "Социальная сеть"
+        verbose_name_plural = "Социальные сети"
+        ordering = ['name']
+
+    def __str__(self):
+        return f"{self.name} for {self.product.name}"
+

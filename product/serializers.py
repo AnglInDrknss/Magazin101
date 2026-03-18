@@ -1,6 +1,6 @@
 from django.db.models import Q
 from rest_framework import serializers
-from product.models import Category, SubCategory, Product
+from product.models import Category, SocialMedia, SubCategory, Product
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,5 +22,12 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ['id', 'name', 'description', 'price', 'image', 'sub_category', 'sort_order', 'created_at', 'updated_at']
+
+
+class SocialMediaSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SocialMedia
+        fields = ['name', 'icon', 'url']
 
 

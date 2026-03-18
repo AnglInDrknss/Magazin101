@@ -1,13 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, get_object_or_404
 from rest_framework import viewsets, mixins
 from rest_framework.filters import OrderingFilter, SearchFilter
-from product.models import Product, SubCategory, Category
+from product.models import Product, SocialMedia, SubCategory, Category
 from product.serializers import (
-    CategorySerializer, SubCategorySerializer,
-    ProductSerializer,
+    CategorySerializer, SocialMediaSerializer, SubCategorySerializer,
+    ProductSerializer
 )
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 
@@ -34,10 +35,10 @@ class SubCategoryViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, views
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filter_backends = [SearchFilter, OrderingFilter]
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = ['name', 'description']
     ordering_fields = ['name', 'price', 'sort_order', 'created_at', 'updated_at', 'sub_category__name']
-    ordering = ['sort_order', 'name']  
+    ordering = ['sort_order', 'name']
 
     @action(detail=False, methods=['get'], url_path='by-subcategory')
     def by_subcategory(self, request):
@@ -50,3 +51,9 @@ class ProductViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(products, many=True)
 
         return Response(serializer.data)
+
+
+class SocialMediaViewSet(viewsets.ModelViewSet):
+    queryset = SocialMedia.objects.all()
+    serializer_class = SocialMediaSerializer
+
