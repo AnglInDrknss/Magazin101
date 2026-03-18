@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from models import Cart, CartItem
+
+from product.models import Product
+from .models import Cart, CartItem
 
 class CartItemSerializer(serializers.ModelSerializer):
     product_name = serializers.CharField(source="product.name")
@@ -11,17 +13,22 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 
 class CartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(source="cartitem_set", many=True)
+    items = CartItemSerializer(many=True, read_only=True)
     total_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Cart
         fields = ["id", "items", "total_price"]
 
-    def get_total_price(self, obj):
-        return obj.get_total_price()
+    def get_total_price(self, obj) -> float:
+        return float(obj.get_total_price())
     
 
 class CartActionSerializer(serializers.Serializer):
     product_id = serializers.IntegerField()
-    quantity = serializers.IntegerField(required=False, default=1)
+    quantity = serializers.IntegerField(default=1)
+
+    def validate_product_id(self, value):
+        if not Product.objects.filter(id=value).exists():
+            raise serializers.ValidationError("Product не найден")
+        return value

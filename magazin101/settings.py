@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     "django_filters",
     "ckeditor",
     "product",
-    'drf_spectacular'
+    'drf_spectacular',
+    'cart',
 ]
 
 MIDDLEWARE = [

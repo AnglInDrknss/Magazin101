@@ -1,22 +1,20 @@
 from PIL.Image import item
 from django.shortcuts import render
 from requests import session
-import cart
-from models import Cart, CartItem
-from serializers import CartSerializer
+
+from product.models import Product
+from .models import Cart, CartItem
+from .serializers import CartSerializer
 from rest_framework import request, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.viewsets import ModelViewSet
 
 from cart.serializers import CartActionSerializer
 
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import action
-from .serializers import CartActionSerializer, CartSerializer
-from .models import Cart, CartItem
-
-class CartViewSet(viewsets.ViewSet):
+class CartViewSet(ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
 
     def get_cart(self, request):
         if not request.session.session_key:
@@ -30,13 +28,16 @@ class CartViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     @action(detail=False, methods=["post"], serializer_class=CartActionSerializer)
-    def add(self, request):
+    def add_product(self, request):
         serializer = CartActionSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        cart = self.get_cart(request)
+
+        cart = self.get_cart(request) 
         product_id = serializer.validated_data['product_id']
         quantity = serializer.validated_data.get('quantity', 1)
-        cart.add_product(product_id, quantity)
+
+        cart.add_product(product_id, quantity)  
+
         return Response({"message": "Product added"})
 
     @action(detail=False, methods=["post"], serializer_class=CartActionSerializer)
