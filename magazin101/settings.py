@@ -90,9 +90,9 @@ WSGI_APPLICATION = 'magazin101.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'your_db_name',
-        'USER': 'a_rybalkin',
-        'PASSWORD': 'rivergarden',
+        'NAME': 'django_db',
+        'USER': 'django_user',
+        'PASSWORD': 'django_pass',
         'HOST': 'db',
         'PORT': '5432',
     }
